@@ -1,0 +1,6 @@
+# Audio is not redistributable; rebuild.py regenerates it from the sources.
+clips/
+source/
+bgm/
+*.wav
+*.flac

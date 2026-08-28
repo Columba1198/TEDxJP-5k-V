@@ -59,7 +59,6 @@ Japanese ASR benchmarks that can be obtained without an application process are 
 ```
 plan.json             segmentation: source talk, cut range, reference text
 manifest.jsonl        NeMo-style manifest, one line per segment
-manifest_offset.jsonl same, referencing source/ with an offset
 text                  utterance id and reference, Kaldi style
 segments utt2spk spk2utt   Kaldi-style metadata
 rebuild.py            downloads the talks and regenerates clips/
@@ -144,7 +143,6 @@ YouTubeで公開されている、日本語のTEDxトークから作成しまし
 ```
 plan.json             分割情報（元トーク・切り出し範囲・字幕）
 manifest.jsonl        NeMo形式マニフェスト。1行1セグメント
-manifest_offset.jsonl 同上。source/ をオフセット字幕する版
 text                  発話IDと字幕（Kaldi形式）
 segments utt2spk spk2utt   Kaldi形式メタデータ
 rebuild.py            元トークを取得し clips/ を生成

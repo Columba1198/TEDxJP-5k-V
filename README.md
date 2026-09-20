@@ -22,7 +22,7 @@ A companion set with heavy noise, using the same segmentation and the same refer
 
 Japanese ASR benchmarks that can be obtained without an application process are scarce, and the ones that exist cover a narrow range.
 
-- Common Voice ja is read speech averaging around four seconds. Long-form behaviour is invisible, and some references do not match their audio.
+- Common Voice is read speech averaging around four seconds. Long-form behaviour is invisible, and some references do not match their audio.
 - TEDxJP-10K has reliable references, but one utterance is one caption cue, so nothing runs longer than about 11 seconds. Its references are close to verbatim: fillers were added by hand and Arabic numerals rewritten as kanji.
 
 ## The TEDxJP-5K sets
@@ -31,8 +31,8 @@ The source talks and the caption format are the same across the three datasets. 
 
 | | TEDxJP-5K-V | [TEDxJP-5K-N](https://github.com/Columba1198/TEDxJP-5K-N) | [TEDxJP-5K-C](https://github.com/Columba1198/TEDxJP-5K-C) |
 |---|---|---|---|
-| Measures | long-form accuracy | robustness to noise | use of preceding context |
-| Audio | clean | playback speed, background music, white noise, lossy codecs | clean |
+| Measures | accuracy across varying audio lengths | robustness to noise | use of preceding context |
+| Audio | unprocessed (clean) | perturbed (noise added, speed perturbation, etc.) | unprocessed (clean) |
 | Choice of segments | spread thinly over the talks | identical to -V | consecutive (698 sequences) |
 | Is the preceding segment in the dataset? | rarely | rarely | usually |
 | Segment length | uniform 2.0 to 30.0 s, mean 16.0 s | same cuts as -V; 1.4 to 30.0 s, mean 15.1 s after the speed changes | uniform 2.0 to 30.0 s, mean 16.0 s |
@@ -86,10 +86,11 @@ clips/ source/        produced by rebuild.py, not tracked
 ```
 
 `prev_context.json` holds, for each segment, the captions of up to eight
-segments that come before it in the same talk, oldest first. It exists to
-measure features that condition on preceding context, such as Whisper's
-`--condition-on-previous-text`: score the set once without it and once with it,
-and the difference is what the conditioning is worth.
+segments that come before it in the same talk, oldest first. The matching audio
+is not included. It was made for measuring features that condition on preceding
+context, such as Whisper's `--condition-on-previous-text`, but is now
+deprecated: it holds the exact captions, whereas in real use an error in the
+output can propagate. Use TEDxJP-5K-C instead.
 
 ## Rebuilding
 
@@ -132,7 +133,7 @@ YouTubeで公開されている、日本語のTEDxトークから作成しまし
 
 申請なしで入手できる日本語ASRベンチマークは少なく、既存のものは測れる範囲が限られています。
 
-- Common Voice ja は読み上げ音声で平均4秒程度です。長尺での精度を計測できないうえ、音声と一致しない字幕も含まれます。
+- Common Voice は読み上げ音声で平均4秒程度です。長尺での精度を計測できないうえ、音声と一致しない字幕も含まれます。
 - TEDxJP-10K は字幕の質が高い一方、1発話が字幕1キューなので最長でも約11秒です。字幕は逐語寄りで、フィラーが手作業で追加され、アラビア数字が漢数字に書き換えられています。
 
 ## TEDxJP-5K の3セット
@@ -141,8 +142,8 @@ YouTubeで公開されている、日本語のTEDxトークから作成しまし
 
 | | TEDxJP-5K-V | [TEDxJP-5K-N](https://github.com/Columba1198/TEDxJP-5K-N) | [TEDxJP-5K-C](https://github.com/Columba1198/TEDxJP-5K-C) |
 |---|---|---|---|
-| 測るもの | 長尺での精度 | 雑音への耐性 | 直前の文脈の活用 |
-| 音声 | 無加工 | 再生速度・BGM・白色雑音・非可逆コーデック | 無加工 |
+| 測るもの | 多様な音声長での精度 | 雑音への耐性 | 直前の文脈の活用 |
+| 音声 | 無加工 | ノイズを追加（雑音追加、速度変更など） | 無加工 |
 | セグメントの選び方 | トーク全体から薄く広く | -V と同一 | 連続（698シーケンス） |
 | 直前のセグメントがデータセット内にあるか | ほぼ無い | ほぼ無い | ほぼ有る |
 | セグメント長 | 2.0〜30.0秒を均一分布、平均16.0秒 | 切れ目は -V と同一。速度変更後は1.4〜30.0秒、平均15.1秒 | 2.0〜30.0秒を均一分布、平均16.0秒 |
@@ -195,7 +196,7 @@ rebuild.py            元トークを取得し clips/ を生成
 clips/ source/        rebuild.py が生成（追跡対象外）
 ```
 
-`prev_context.json` は、各セグメントの直前にあたる同一トーク内の字幕を、古い順に最大8個ずつ収めたものです。Whisperの `--condition-on-previous-text` のような、直前の文脈に条件付けする機能の性能測定に使えます。文脈なしと文脈ありで2回スコアを取れば、その差が条件付けの効果になります。
+`prev_context.json` は、各セグメントの直前にあたる同一トーク内の字幕を、古い順に最大8個ずつ収めたものです。対応する音声は含まれていません。Whisperの `--condition-on-previous-text` のような、直前の文脈に条件付けする機能の性能測定用に作成しましたが、現在は非推奨です。`prev_context.json` には正確な字幕が含まれていますが、実際の運用では出力の誤りが伝播する可能性があるため、TEDxJP-5K-C を使用してください。
 
 ## 再構築
 

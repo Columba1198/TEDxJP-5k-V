@@ -14,8 +14,6 @@ Changes from the sources:
 - Cuts are placed only where the captions leave a pause, with a random margin of 0 to 200 ms at each end to imitate a different voice-activity detector.
 - Caption text is normalised: full-width digits and Latin letters to half-width, non-speech markers such as laughter and applause removed, whitespace stripped.
 
-Each segment is a single continuous cut of the original audio, with no splicing or synthesised silence.
-
 A companion set with heavy noise, using the same segmentation and the same references, is at [TEDxJP-5K-N](https://github.com/Columba1198/TEDxJP-5K-N). The difference between scores on the two sets is a measure of robustness. This set is [TEDxJP-5K-V](https://github.com/Columba1198/TEDxJP-5K-V).
 
 ## Why this exists

@@ -25,6 +25,25 @@ Japanese ASR benchmarks that can be obtained without an application process are 
 - Common Voice ja is read speech averaging around four seconds. Long-form behaviour is invisible, and some references do not match their audio.
 - TEDxJP-10K has reliable references, but one utterance is one caption cue, so nothing runs longer than about 11 seconds. Its references are close to verbatim: fillers were added by hand and Arabic numerals rewritten as kanji.
 
+## The TEDxJP-5K sets
+
+The source talks and the caption format are the same across the three datasets. What changes is the audio and the choice of segments.
+
+| | TEDxJP-5K-V | [TEDxJP-5K-N](https://github.com/Columba1198/TEDxJP-5K-N) | [TEDxJP-5K-C](https://github.com/Columba1198/TEDxJP-5K-C) |
+|---|---|---|---|
+| Measures | long-form accuracy | robustness to noise | use of preceding context |
+| Audio | clean | playback speed, background music, white noise, lossy codecs | clean |
+| Choice of segments | spread thinly over the talks | identical to -V | consecutive (698 sequences) |
+| Is the preceding segment in the dataset? | rarely | rarely | usually |
+| Segment length | uniform 2.0 to 30.0 s, mean 16.0 s | same cuts as -V; 1.4 to 30.0 s, mean 15.1 s after the speed changes | uniform 2.0 to 30.0 s, mean 16.0 s |
+| Segments / talks | 5,000 / 257 | 5,000 / 257 | 5,000 / 257 |
+| Total audio | 22.2 h | 20.9 h | 22.2 h |
+| Reference characters | 409,033 | 409,033 | 410,838 |
+| Utterance ids | all 5,000 shared with -N | all 5,000 shared with -V | 67 coincide with -V and -N |
+
+-V and -N cut their segments at the same points, so their scores can be compared directly and the difference between them is a measure of robustness.
+-C uses almost entirely different segments, so its score cannot be compared directly against either.
+
 ## Variety
 
 | Property | Setting |
@@ -108,6 +127,25 @@ YouTubeで公開されている、日本語のTEDxトークから作成しまし
 
 - Common Voice ja は読み上げ音声で平均4秒程度です。長尺での精度を計測できないうえ、音声と一致しない字幕も含まれます。
 - TEDxJP-10K は字幕の質が高い一方、1発話が字幕1キューなので最長でも約11秒です。字幕は逐語寄りで、フィラーが手作業で追加され、アラビア数字が漢数字に書き換えられています。
+
+## TEDxJP-5K の3セット
+
+元トークと字幕のフォーマットは3つのデータセットで共通です。違うのは、音声とセグメントの選び方です。
+
+| | TEDxJP-5K-V | [TEDxJP-5K-N](https://github.com/Columba1198/TEDxJP-5K-N) | [TEDxJP-5K-C](https://github.com/Columba1198/TEDxJP-5K-C) |
+|---|---|---|---|
+| 測るもの | 長尺での精度 | 雑音への耐性 | 直前の文脈の活用 |
+| 音声 | 無加工 | 再生速度・BGM・白色雑音・非可逆コーデック | 無加工 |
+| セグメントの選び方 | トーク全体から薄く広く | -V と同一 | 連続（698シーケンス） |
+| 直前のセグメントがデータセット内にあるか | ほぼ無い | ほぼ無い | ほぼ有る |
+| セグメント長 | 2.0〜30.0秒を均一分布、平均16.0秒 | 切れ目は -V と同一。速度変更後は1.4〜30.0秒、平均15.1秒 | 2.0〜30.0秒を均一分布、平均16.0秒 |
+| セグメント数 / トーク数 | 5,000 / 257 | 5,000 / 257 | 5,000 / 257 |
+| 合計 | 22.2 時間 | 20.9 時間 | 22.2 時間 |
+| 字幕文字数 | 409,033 | 409,033 | 410,838 |
+| 発話ID | 5,000本すべて -N と共通 | 5,000本すべて -V と共通 | 67本が -V / -N と一致 |
+
+-Vと-Nはセグメントの分割位置が同じなので、スコアを直接比較できます。スコアの差がロバスト性の指標になります。
+-Cは採用したセグメントがほぼ異なるため、スコアの直接比較はできません。
 
 ## 考慮した多様性
 
